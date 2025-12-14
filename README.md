@@ -28,7 +28,7 @@ Pastikan di komputer Anda sudah terinstall:
 
 1.  Masuk ke folder backend (jika dipisah):
     ```bash
-    cd backend-api
+    cd backend-api-notes
     ```
 
 2.  Install dependencies PHP:
