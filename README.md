@@ -1,59 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📝 Fullstack Notes App (Laravel + React)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pencatatan sederhana namun *powerful* yang dibangun menggunakan **Laravel 11 (Backend)** dan **React + Vite (Frontend)**. Aplikasi ini menggunakan REST API dengan autentikasi Token (Sanctum) dan mendukung Custom ID (String) serta format data CamelCase.
 
-## About Laravel
+## 🛠️ Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Backend:**
+* Laravel 11
+* MySQL Database
+* Laravel Sanctum (Authentication)
+* Custom String IDs (UUID-like)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Frontend:**
+* React JS
+* Vite
+* Fetch API (Custom Network Handler)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Panduan Instalasi (Untuk Pengguna Baru)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Pastikan di komputer Anda sudah terinstall:
+1.  **PHP** & **Composer**
+2.  **Node.js** & **NPM**
+3.  **MySQL** (via XAMPP/Laragon/Docker)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1️⃣ Setup Backend (Laravel)
 
-## Laravel Sponsors
+1.  Masuk ke folder backend (jika dipisah):
+    ```bash
+    cd backend-api-notes
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2.  Install dependencies PHP:
+    ```bash
+    composer install
+    ```
 
-### Premium Partners
+3.  Duplikat file environment dan generate key:
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4.  **Konfigurasi Database:**
+    Buka file `.env`, lalu sesuaikan konfigurasi database Anda. Pastikan database `backend_api` (atau nama lain) sudah dibuat di phpMyAdmin.
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=backend_api  <-- Sesuaikan nama DB
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
-## Contributing
+5.  **Install API & Migrasi Database:**
+    Penting: Laravel 11 membutuhkan instalasi API manual dan migrasi struktur tabel (termasuk tabel user dengan ID string).
+    ```bash
+    php artisan install:api
+    php artisan migrate
+    ```
+    *(Jika muncul error tabel sudah ada, gunakan `php artisan migrate:fresh`)*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6.  Jalankan Server Backend:
+    ```bash
+    php artisan serve
+    ```
+    *Server akan berjalan di `http://127.0.0.1:8000`*
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2️⃣ Setup Frontend (React)
 
-## Security Vulnerabilities
+1.  Buka terminal baru, masuk ke folder frontend:
+    ```bash
+    cd frontend-app
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2.  Install dependencies JavaScript:
+    ```bash
+    npm install
+    ```
 
-## License
+3.  **Konfigurasi Base URL (PENTING):**
+    Pastikan file konfigurasi API (misalnya di `utils/network-data.js` atau `config.js`) mengarah ke port Laravel yang benar:
+    ```javascript
+    const BASE_URL = "[http://127.0.0.1:8000/api/v1](http://127.0.0.1:8000/api/v1)";
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4.  Jalankan Server Frontend:
+    ```bash
+    npm run dev
+    ```
+    *Aplikasi akan berjalan di `http://localhost:5173`*
+
+---
+
+## ⚠️ Troubleshooting Umum
+
+Jika Anda mengalami masalah saat menjalankan aplikasi, cek solusi berikut:
+
+**1. Layar Putih (Blank Screen) / Error 500**
+* Biasanya karena database belum sinkron. Matikan server Laravel, lalu reset database:
+    ```bash
+    php artisan migrate:fresh
+    ```
+* Pastikan file `.env` sudah benar.
+
+**2. Error "Invalid Date" pada Catatan**
+* Backend mengirim `created_at` (snake_case) tapi Frontend minta `createdAt` (camelCase).
+* **Solusi:** Pastikan Model `Note.php` di Laravel memiliki properti `$appends = ['createdAt']` dan getter `getCreatedAtAttribute`.
+
+**3. Error 401 Unauthorized / Login Gagal Terus**
+* Token mungkin kadaluarsa atau user terhapus setelah `migrate:fresh`.
+* **Solusi:** Hapus `accessToken` di LocalStorage browser, lalu **Register** akun baru.
+
+**4. Error CORS (Cross-Origin)**
+* Jika Frontend tidak bisa akses Backend, pastikan `config/cors.php` di Laravel sudah mengizinkan API:
+    ```php
+    'paths' => ['api/*', ...],
+    'allowed_origins' => ['*'], // Atau 'http://localhost:5173'
+    ```
+
+---
+
+## 📂 Struktur Penting
+
+* **`routes/api.php`**: Definisi endpoint API (Login, Register, Notes CRUD).
+* **`app/Models/User.php`**: Model User dengan konfigurasi ID String (`user-xxxx`).
+* **`app/Models/Note.php`**: Model Note dengan casting `archived` (boolean) dan mapper `createdAt`.
+* **`database/migrations/`**: File struktur database.
+
+---
+*Happy Coding!* 🚀
